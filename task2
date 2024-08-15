@@ -1,0 +1,364 @@
+/*Interactive Quiz Application*/
+/*HTML code and CSS code*/
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Quiz</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+      .quiz-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+      .question {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .choices {
+        list-style-type: none;
+        padding: 0;
+      }
+      .choices li {
+        margin-bottom: 10px;
+      }
+      .choices button {
+        padding: 10px;
+        width: 100%;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .choices button:hover {
+        background-color: #0056b3;
+      }
+      #submitBtn,
+      #restartBtn,
+      #sendFeedbackBtn {
+        margin-top: 20px;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      #submitBtn {
+        background-color: #28a745;
+        color: white;
+      }
+      #submitBtn:hover {
+        background-color: #218838;
+      }
+      #restartBtn {
+        background-color: #dc3545;
+        color: white;
+        display: none;
+      }
+      #restartBtn:hover {
+        background-color: #c82333;
+      }
+      #feedbackForm {
+        margin-top: 20px;
+        display: none;
+        text-align: left;
+      }
+      #feedbackInput {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 10px;
+      }
+      #sendFeedbackBtn {
+        background-color: #007bff;
+        color: white;
+        display: none;
+      }
+      #sendFeedbackBtn:hover {
+        background-color: #0056b3;
+      }
+      #feedback {
+        margin-top: 15px;
+        font-size: 16px;
+        color: #555;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      #questionCounter {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <div id="questionCounter"></div>
+      <div id="quiz"></div>
+      <div id="feedback"></div>
+      <button id="submitBtn">Submit</button>
+      <button id="restartBtn">Restart Quiz</button>
+      <div id="result"></div>
+
+      <!-- Feedback Form -->
+      <div id="feedbackForm">
+        <textarea id="feedbackInput" placeholder="Your feedback..."></textarea>
+        <button id="sendFeedbackBtn">Send Feedback</button>
+      </div>
+    </div>
+
+    <script src="quiz.js"></script>
+  </body>
+</html>
+
+/*js code*/
+
+const quizData = [
+  {
+    question: "1.What does HTML stand for?",
+    choices: [
+      "A)HyperText Markup Language",
+      "B)HyperText Machine Language",
+      "C)HighText Markup Language",
+      "D)HyperTransfer Markup Language",
+    ],
+    correct: "A)HyperText Markup Language",
+  },
+  {
+    question: "2.Which HTML tag is used to define an internal style sheet?",
+    choices: ["A)<style>", "B)<css>", "C)<Script>", "D)<link>"],
+    correct: "A)<style>",
+  },
+  {
+    question: "3.What does CSS stand for?",
+    choices: [
+      "A)Cascading Style Sheets",
+      "B)Creative Style Sheets",
+      "C)Colorful Style Sheets",
+      "D)Computer Style Sheets",
+    ],
+    correct: "A)Cascading Style Sheets",
+  },
+  {
+    question: "4.In JavaScript, what will console.log(typeof []) output?",
+    choices: ["A)Object", "B)Array", "C)List", "D)undefind"],
+    correct: "A)Object",
+  },
+  {
+    question: "5.What is the purpose of the z-index property in CSS?",
+    choices: [
+      "A)To control the stacking order of positioned elementss",
+      "B)To set the zoom level of an elementd",
+      "C)To define the opacity of an element",
+      "D)To specify the margin of an element",
+    ],
+    correct: "A)To control the stacking order of positioned elementss",
+  },
+  {
+    question:
+      "6.Which CSS property is used to change the background color of an element?",
+    choices: [
+      ".A)color",
+      "B)bdcolor",
+      "C)background-color",
+      "D)All of the above",
+    ],
+    correct: "C)background-color",
+  },
+  {
+    question: "7.What is the default value of the position property in CSS?",
+    choices: ["A)absolute", "B)fixed", "C)relative", "D)Static"],
+    correct: "D)Static",
+  },
+  {
+    question: "8.How can you create a rounded border in CSS?",
+    choices: [
+      "A)border-radius: 5px;",
+      "B)border-round: 5px;",
+      "C)border-radius: 50%;",
+      "D)border: round;",
+    ],
+    correct: "A)border-radius: 5px;",
+  },
+  {
+    question: "9.How do you declare a variable in JavaScript?",
+    choices: ["A)var", "B)let", "C)const", "D)All of the above"],
+    correct: "D)All of the above",
+  },
+  {
+    question:
+      "10.Which method is used to remove the last element from an array in JavaScript?",
+    choices: ["A)shift()", "B)pop()", "C)splice()", "D)remove()"],
+    correct: "B)pop()",
+  },
+  {
+    question:
+      "11.Which method is used to remove the last element from an array in JavaScript?",
+    choices: ["A)number", "B)non", "C)undefined", "D)object"],
+    correct: "A)number",
+  },
+  {
+    question:
+      "12.Which JavaScript method is used to convert a JSON string into a JavaScript object?",
+    choices: [
+      "A)JSON.convert()",
+      "B)JSON.stringify()",
+      "C)JSON.convert()",
+      "D)JSON.parse()",
+    ],
+    correct: "D)JSON.parse()",
+  },
+  {
+    question:
+      "13.Which CSS property is used to change the text color of an element?",
+    choices: ["A)fonr-color", "B)text-color", "C)color", "D)foreground-color"],
+    correct: "C)color",
+  },
+  {
+    question:
+      "14.Which CSS property controls the space between the content of an element and its border?",
+    choices: ["A)border-spacing", "B)gap", "C)padding", "D)margin"],
+    correct: "C)padding",
+  },
+  {
+    question:
+      "15.Which CSS property is used to change the text color of an element?",
+    choices: ["fonr-color", "text-color", "color", "foreground-color"],
+    correct: "color",
+  },
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+const quizContainer = document.getElementById("quiz");
+const feedbackContainer = document.getElementById("feedback");
+const submitBtn = document.getElementById("submitBtn");
+const restartBtn = document.getElementById("restartBtn");
+const resultContainer = document.getElementById("result");
+const questionCounter = document.getElementById("questionCounter");
+const feedbackForm = document.getElementById("feedbackForm");
+const feedbackInput = document.getElementById("feedbackInput");
+const sendFeedbackBtn = document.getElementById("sendFeedbackBtn");
+
+function loadQuiz() {
+  clearQuiz();
+  const currentQuestion = quizData[currentQuestionIndex];
+  const questionElement = document.createElement("div");
+  questionElement.classList.add("question");
+  questionElement.innerText = currentQuestion.question;
+  quizContainer.appendChild(questionElement);
+
+  const choicesList = document.createElement("ul");
+  choicesList.classList.add("choices");
+
+  currentQuestion.choices.forEach((choice) => {
+    const choiceItem = document.createElement("li");
+    const choiceButton = document.createElement("button");
+    choiceButton.innerText = choice;
+    choiceButton.addEventListener("click", () => selectAnswer(choice));
+    choiceItem.appendChild(choiceButton);
+    choicesList.appendChild(choiceItem);
+  });
+
+  quizContainer.appendChild(choicesList);
+  updateQuestionCounter();
+}
+
+function selectAnswer(choice) {
+  const currentQuestion = quizData[currentQuestionIndex];
+  let feedback = "";
+
+  if (choice === currentQuestion.correct) {
+    score++;
+    feedback = "Correct! Well done.";
+  } else {
+    feedback = `Incorrect. The correct answer is "${currentQuestion.correct}".`;
+  }
+
+  showFeedback(feedback);
+
+  // Move to the next question after a short delay
+  setTimeout(() => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quizData.length) {
+      loadQuiz();
+    } else {
+      showResults();
+      showFeedbackForm();
+    }
+  }, 2000); // 2-second delay to show feedback
+}
+
+function showFeedback(feedback) {
+  feedbackContainer.innerText = feedback;
+}
+
+function clearQuiz() {
+  quizContainer.innerHTML = "";
+  feedbackContainer.innerText = "";
+}
+
+function showResults() {
+  clearQuiz();
+  resultContainer.innerText = `You scored ${score} out of ${quizData.length}`;
+  submitBtn.style.display = "none";
+  restartBtn.style.display = "block";
+}
+
+function updateQuestionCounter() {
+  questionCounter.innerText = `Question ${currentQuestionIndex + 1} of ${
+    quizData.length
+  }`;
+}
+
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  submitBtn.style.display = "block";
+  restartBtn.style.display = "none";
+  feedbackForm.style.display = "none";
+  sendFeedbackBtn.style.display = "none";
+  loadQuiz();
+}
+
+function showFeedbackForm() {
+  feedbackForm.style.display = "block";
+  sendFeedbackBtn.style.display = "block";
+}
+
+function sendFeedback() {
+  const feedbackText = feedbackInput.value;
+  if (feedbackText.trim() !== "") {
+    alert("Thank you for your feedback: " + feedbackText);
+    feedbackInput.value = ""; // Clear the input field
+  } else {
+    alert("Please enter your feedback before sending.");
+  }
+}
+
+// Initialize Quiz
+loadQuiz();
+
+// Add event listener to restart and send feedback buttons
+restartBtn.addEventListener("click", restartQuiz);
+sendFeedbackBtn.addEventListener("click", sendFeedback);
+
