@@ -3,7 +3,7 @@
 Name: N Dhilip<br>
 Company: CODTECHIT SOLUTIONS<br>
 ID      :  CT6WDS1313<br>
-Dmain: Front-end development<br>
+Dmain: FRONTEND WEB DEVELOPMENT<br>
 Duration: July to August 2024.<br>
 
 **Overview of the project**
