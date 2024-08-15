@@ -9,6 +9,8 @@ Duration: July to August 2024.<br>
 **Overview of the project**
 Project: Interactive Quiz Application
 
+![task2](https://github.com/user-attachments/assets/3e371e0c-5271-4b2d-b632-795d6bc71324)
+
 **Objective**
 
 The objective of this project is to develop an Interactive Quiz Application that allows users to test their knowledge on various topics through an engaging and user-friendly interface. The main goals include:
